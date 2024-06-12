@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Leaf Disease Identification</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sanchez&display=swap">
+    <style>
+        body {
+            font-family: 'Sanchez', serif;
+            margin: 0;
+            padding: 0;
+            background-color: #313236;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .navbar {
+            background-color: #2c2c2c;
+            overflow: hidden;
+            position: sticky;
+            top: 0;
+            width:95%;
+            margin-top:15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            border-radius: 20px;
+            margin-bottom:30px;
+        }
+        .navbar a {
+            color: #90ee90;
+            font-size: 24px;
+            text-decoration: none;
+            padding-left: 20px;
+            padding-top: 20px;
+            padding-bottom: 20px;;
+
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .headings {
+            text-align: left;
+        }
+        h1 {
+            font-size: 55px;
+            margin-bottom:10px;
+            color: #ffff;
+        }
+        h2 {
+            font-size: 23px;
+            margin-top:20px;
+            color: #90ee90;
+        }
+        form {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 50px auto;
+        }
+        input[type="file"] {
+            display: none;
+        }
+        label {
+            padding: 15px;
+            background-color: #ffff;
+            color: #4CAF50;
+            cursor: pointer;
+            font-size: 20px;
+        }
+        .submit-button {
+            transition: background-color 0.5s ease;
+        }
+        .submit-button:hover {
+            background-color: #6cdd70;
+        }
+        label:hover {
+            text-decoration: underline;
+        }
+        input[type="submit"] {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 50px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="#">Leaf Disease Identification</a>
+        <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#90ee90"><path d="M216-176q-45-45-70.5-104T120-402q0-63 24-124.5T222-642q35-35 86.5-60t122-39.5Q501-756 591.5-759t202.5 7q8 106 5 195t-16.5 160.5q-13.5 71.5-38 125T684-182q-53 53-112.5 77.5T450-80q-65 0-127-25.5T216-176Zm112-16q29 17 59.5 24.5T450-160q46 0 91-18.5t86-59.5q18-18 36.5-50.5t32-85Q709-426 716-500.5t2-177.5q-49-2-110.5-1.5T485-670q-61 9-116 29t-90 55q-45 45-62 89t-17 85q0 59 22.5 103.5T262-246q42-80 111-153.5T534-520q-72 63-125.5 142.5T328-192Zm0 0Zm0 0Z"/></svg>
+    </div>
+    <div class="container">
+        <div class="headings">
+            <h1>Diagnose <span style="color: #90ee90;">Plant</span> Woes</h1>
+            <h1>with Ease</h1>
+            <h2>Identify plant diseases quickly</h2>
+            <h2>for a thriving garden!</h2>
+            <form id="resultform" action="/" method="post" enctype="multipart/form-data">
+                <label for="file">Select Image</label>
+                <input type="file" name="file" id="file" accept=".jpg, .jpeg, .png">
+                <input type="submit" id="get-results-button" value="Get Results" name="submit" class="submit-button">
+                <div id="results" style="margin-top: 15px; font-size: 20px;"></div>
+            </form>
+            {% if filename %}
+                <p>Uploaded image: {{ filename }}</p>
+            {% endif %}
+
+        </div>
+        <img id="uploaded-image" height="580px" width="400px" style=" border-radius: 40px;" src="https://i.pinimg.com/1200x/c2/fd/23/c2fd2335fd7a1ddf4d26e6aaffd2ce55.jpg" alt="Fresh Leaves">
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('file').addEventListener('change', function(e) {
+        var image = document.createElement('img');
+        image.src = URL.createObjectURL(e.target.files[0]);
+        image.height = 100; 
+        image.width = 100; 
+        image.style.borderRadius = '10px';
+        image.style.marginLeft = '10px';
+        this.parentNode.insertBefore(image, this.nextSibling);
+        // Replace the existing image in the "uploaded-image" div
+        var existingImage = document.getElementById('uploaded-image');
+        existingImage.src = URL.createObjectURL(e.target.files[0]);
+    });
+        document.getElementById('get-results-button').addEventListener('click', function(event) {
+        event.preventDefault();
+        fetch('/', {
+            method: 'POST',
+            body: new FormData(document.getElementById('resultform'))  
+        })
+        .then(response => response.json())
+        .then(data => {
+            var result = data.result;
+            var resultText;
+            if (result.includes('healthy')) {
+                resultText = 'Your plant is healthy!';
+            } else {
+                resultText = 'Disease identified is ' + result.split('___')[1].replace(/_/g, ' ');
+            }
+            document.getElementById('results').innerText = resultText;
+        });
+    });
+});
+    </script>
+</body>
+</html>
