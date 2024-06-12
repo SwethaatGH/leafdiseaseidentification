@@ -36,6 +36,9 @@ Uploads folder will get created within projectfolder.
 ![image](https://github.com/SwethaatGH/leafdiseaseidentification/assets/98175379/58c96e7b-6dd6-4968-b717-d65833ca182f)
 ![image](https://github.com/SwethaatGH/leafdiseaseidentification/assets/98175379/5e5bca86-4397-400c-958e-7ed8e1a258e4)
 
-## Sample Test Images
+## Additional
 
 ![image](https://github.com/SwethaatGH/leafdiseaseidentification/assets/98175379/5942207d-69e1-4aed-ba0a-d4d93ad9353d)
+![Screenshot 2024-06-11 at 11 40 21 PM](https://github.com/SwethaatGH/leafdiseaseidentification/assets/98175379/47866cc3-f587-49f4-97ec-c5d07ee9d3b0)
+![Screenshot 2024-06-11 at 10 59 20 PM](https://github.com/SwethaatGH/leafdiseaseidentification/assets/98175379/0ef910db-3695-4b0f-9a40-c4a291e82511)
+
