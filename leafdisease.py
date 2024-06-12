@@ -117,4 +117,5 @@ def testing(path):
 #Enter full path of image of leaf with disease to be identified
 path='/Users/swetha/Downloads/leafdataset/images_for_test/PotatoEarlyBlight4.JPG'
 testing(path)
+model.save('my_model.h5')
 
